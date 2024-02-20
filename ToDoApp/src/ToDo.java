@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 /*
 Given the terminal opened in the project directory
 When the application is run without any arguments
@@ -7,6 +9,30 @@ public class ToDo {
   public static void main(String[] args) {
     if(args.length == 0){
       printUsage();
+      return;
+    }
+
+    switch (args[0]){
+      case "-l":
+        //not implemented yet
+        System.out.println("Function is not implemented yet");
+        break;
+      case "-a":
+        //not implemented yet
+        System.out.println("Function is not implemented yet");
+        break;
+      case "-r":
+        //not implemented yet
+        System.out.println("Function is not implemented yet");
+        break;
+      case "-c":
+        //not implemented yet
+        System.out.println("Function is not implemented yet");
+        break;
+      default:
+        System.out.println("Invalid argument, try again!");
+        printUsage();
+        break;
     }
   }
 
