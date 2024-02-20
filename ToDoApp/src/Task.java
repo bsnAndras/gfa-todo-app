@@ -8,4 +8,9 @@ public class Task {
     this.description = description;
     state=State.TODO;
   }
+
+  @Override
+  public String toString() {
+    return description;
+  }
 }
