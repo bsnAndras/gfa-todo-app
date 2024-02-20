@@ -1,18 +1,14 @@
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.nio.*;
+import java.nio.file.*;
 import java.util.List;
 
-/*
-Given the terminal opened in the project directory
-When the application is run without any arguments
-Then it should print the usage instructions
- */
 public class ToDo {
   public static void main(String[] args) {
+    /*
+    Given the terminal opened in the project directory
+    When the application is run without any arguments
+    Then it should print the usage instructions
+    */
     if(args.length == 0){
       printUsage();
       return;
@@ -20,6 +16,7 @@ public class ToDo {
 
     switch (args[0]){
       case "-l":
+        //for listing out tasks from the todos.txt
         listTasks();
         break;
       case "-a":
@@ -73,7 +70,7 @@ public class ToDo {
   private static void listTasks() {
     List<String> toDoList;
     try {
-      toDoList=Files.readAllLines(Paths.get("todos.txt"));
+      toDoList= Files.readAllLines(Paths.get("todos.txt"));
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
