@@ -32,7 +32,7 @@ public class ToDo {
         System.out.println("Function is not implemented yet");
         break;
       default:
-        System.out.println("Invalid argument, try again!");
+        System.err.println("Unsupported argument, try again!");
         printUsage();
         break;
     }
@@ -60,9 +60,7 @@ public class ToDo {
    * When the application is run with -l argument
    * Then it should print the tasks that are stored in the file
    * And it should add numbers before each task
-   *
    * $ todo -l
-   *
    * 1 - Walk the dog
    * 2 - Buy milk
    * 3 - Do homework
@@ -73,6 +71,10 @@ public class ToDo {
       toDoList= Files.readAllLines(Paths.get("todos.txt"));
     } catch (IOException e) {
       throw new RuntimeException(e);
+    }
+    if(toDoList.isEmpty()){
+      System.out.println("No todos for today! :)");
+      return;
     }
     for (int i = 0; i < toDoList.size(); i++) {
       System.out.printf("%d - %s\n",i+1,toDoList.get(i));
