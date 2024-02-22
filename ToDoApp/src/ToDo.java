@@ -25,7 +25,7 @@ public class ToDo {
         break;
       case "-a":
         //not implemented yet
-        //addTask(args);
+        addTask(args[1]);
         break;
       case "-r":
         //not implemented yet
@@ -67,6 +67,13 @@ public class ToDo {
    * 1 - Walk the dog
    * 2 - Buy milk
    * 3 - Do homework
+   * <p>
+   * ### Empty list:
+   * - **Given** the terminal opened in the project directory
+   * - And the file where you store your data exists
+   * - And the file has 0 task
+   * - **When** the application is ran with `-l` argument
+   * - **Then** it should show a message like this: `No todos for today! :)`
    */
   private static void listTasks() {
     toDoList = loadToDos();
@@ -86,19 +93,27 @@ public class ToDo {
     fileContent = readFile(FILEPATH);
 
     for (String line : fileContent) {
-        toDoList.add(new Task(line));
+      toDoList.add(new Task(line));
     }
 
     return toDoList;
   }
 
-  public static List<String> readFile(Path filePath){
+  public static List<String> readFile(Path filePath) {
     List<String> fileContent;
     try {
       fileContent = Files.readAllLines(filePath);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
-    return  fileContent;
+    return fileContent;
+  }
+
+  public static int addTask(String newTaskDescription){
+    Task newTask = new Task(newTaskDescription);
+    toDoList = loadToDos();
+    toDoList.add(newTask);
+    //writeFile
+    return 0;
   }
 }
