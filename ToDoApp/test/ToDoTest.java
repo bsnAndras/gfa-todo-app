@@ -1,5 +1,8 @@
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,6 +25,17 @@ class ToDoTest {
   //List Tasks Tests
   @Test
   public void shouldReturnToDoListWhenLoadToDos(){
-    Assertions.assertDoesNotThrow(()-> Files.readAllLines(ToDo.FILEPATH));
+    List<String> fileContent;
+    Path filePath = ToDo.FILEPATH;
+    List<Task> toDoList = new ArrayList<>();
+
+    fileContent = ToDo.readFile(filePath);
+
+    for (String line : fileContent) {
+      toDoList.add(new Task(line));
+    }
+
+    Assertions.assertEquals(toDoList.toString(),ToDo.loadToDos().toString());
+
   }
 }

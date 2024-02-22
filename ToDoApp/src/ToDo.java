@@ -80,7 +80,7 @@ public class ToDo {
     }
   }
 
-  private static List<Task> loadToDos() {
+  public static List<Task> loadToDos() {
     List<String> fileContent;
     List<Task> toDoList = new ArrayList<>();
     fileContent = readFile(FILEPATH);
@@ -92,7 +92,7 @@ public class ToDo {
     return toDoList;
   }
 
-  private static List<String> readFile(Path filePath){
+  public static List<String> readFile(Path filePath){
     List<String> fileContent;
     try {
       fileContent = Files.readAllLines(filePath);
