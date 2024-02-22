@@ -83,16 +83,22 @@ public class ToDo {
   private static List<Task> loadToDos() {
     List<String> fileContent;
     List<Task> toDoList = new ArrayList<>();
-    try {
-      fileContent = Files.readAllLines(ToDo.FILEPATH);
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
+    fileContent = readFile(FILEPATH);
 
     for (String line : fileContent) {
         toDoList.add(new Task(line));
     }
 
     return toDoList;
+  }
+
+  private static List<String> readFile(Path filePath){
+    List<String> fileContent;
+    try {
+      fileContent = Files.readAllLines(filePath);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+    return  fileContent;
   }
 }
