@@ -13,6 +13,12 @@ class ToDoTest {
 
   }
 
+  //readFile test
+  @Test
+  public void shouldReadWithoutError(){
+    Assertions.assertDoesNotThrow(()-> ToDo.readFile(ToDo.FILEPATH));
+  }
+
   //List Tasks Tests
   @Test
   public void shouldReturnToDoListWhenLoadToDos(){
