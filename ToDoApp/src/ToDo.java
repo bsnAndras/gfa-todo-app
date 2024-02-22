@@ -26,7 +26,7 @@ public class ToDo {
         break;
       case "-a":
         //not implemented yet
-        addTask(FILEPATH, args[1]);
+        addTask(args[1],FILEPATH);
         break;
       case "-r":
         //not implemented yet
@@ -119,11 +119,11 @@ public class ToDo {
     return 0;
   }
 
-  public static int addTask(Path filePath, String newTaskDescription) {
+  public static int addTask(String newTaskDescription,Path filePath) {
     Task newTask = new Task(newTaskDescription);
     toDoList = loadToDos(filePath);
     toDoList.add(newTask);
-    //writeFile
+    writeFile(newTaskDescription,filePath);
     return 0;
   }
 }
