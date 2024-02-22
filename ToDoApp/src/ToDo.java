@@ -5,7 +5,7 @@ import java.util.List;
 
 public class ToDo {
   public static final Path FILEPATH = Paths.get("src/todos.txt");
-  private static List<Task> toDoList;
+  public static List<Task> toDoList = new ArrayList<>();
 
   public static void main(String[] args) {
     /*
@@ -21,11 +21,11 @@ public class ToDo {
     switch (args[0]) {
       case "-l":
         //for listing out tasks from the todos.txt
-        listTasks();
+        listTasks(FILEPATH);
         break;
       case "-a":
         //not implemented yet
-        //addTask(args);
+        //addTask(FILEPATH,args[1]);
         break;
       case "-r":
         //not implemented yet
@@ -67,9 +67,16 @@ public class ToDo {
    * 1 - Walk the dog
    * 2 - Buy milk
    * 3 - Do homework
+   * <p>
+   * ### Empty list:
+   * - **Given** the terminal opened in the project directory
+   * - And the file where you store your data exists
+   * - And the file has 0 task
+   * - **When** the application is ran with `-l` argument
+   * - **Then** it should show a message like this: `No todos for today! :)`
    */
-  private static void listTasks() {
-    toDoList = loadToDos();
+  private static void listTasks(Path filePath) {
+    toDoList = loadToDos(filePath);
 
     if (toDoList.isEmpty()) {
       System.out.println("No todos for today! :)");
@@ -80,25 +87,25 @@ public class ToDo {
     }
   }
 
-  public static List<Task> loadToDos() {
+  public static List<Task> loadToDos(Path filePath) {
     List<String> fileContent;
     List<Task> toDoList = new ArrayList<>();
-    fileContent = readFile(FILEPATH);
+    fileContent = readFile(filePath);
 
     for (String line : fileContent) {
-        toDoList.add(new Task(line));
+      toDoList.add(new Task(line));
     }
 
     return toDoList;
   }
 
-  public static List<String> readFile(Path filePath){
+  public static List<String> readFile(Path filePath) {
     List<String> fileContent;
     try {
       fileContent = Files.readAllLines(filePath);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
-    return  fileContent;
+    return fileContent;
   }
 }

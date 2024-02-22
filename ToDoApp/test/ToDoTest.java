@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 class ToDoTest {
   ToDo todo;
   String[] args;
+
   @BeforeEach
   public void setTodo() {
     todo = new ToDo();
@@ -18,13 +19,13 @@ class ToDoTest {
 
   //readFile test
   @Test
-  public void shouldReadWithoutError(){
-    Assertions.assertDoesNotThrow(()-> ToDo.readFile(ToDo.FILEPATH));
+  public void shouldReadWithoutError() {
+    Assertions.assertDoesNotThrow(() -> ToDo.readFile(ToDo.FILEPATH));
   }
 
   //List Tasks Tests
   @Test
-  public void shouldReturnToDoListWhenLoadToDos(){
+  public void shouldReturnToDoListWhenLoadToDos() {
     List<String> fileContent;
     Path filePath = ToDo.FILEPATH;
     List<Task> toDoList = new ArrayList<>();
@@ -35,7 +36,7 @@ class ToDoTest {
       toDoList.add(new Task(line));
     }
 
-    Assertions.assertEquals(toDoList.toString(),ToDo.loadToDos().toString());
+    Assertions.assertEquals(toDoList.toString(), ToDo.loadToDos(filePath).toString());
 
   }
 }
