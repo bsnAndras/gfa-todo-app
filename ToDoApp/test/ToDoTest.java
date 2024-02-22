@@ -23,6 +23,12 @@ class ToDoTest {
     Assertions.assertDoesNotThrow(() -> ToDo.readFile(ToDo.FILEPATH));
   }
 
+  //writeFile test
+  @Test
+  public void shouldWriteWithoutError() {
+    Assertions.assertDoesNotThrow(() -> ToDo.writeFile("",ToDo.FILEPATH));
+  }
+
   //List Tasks Tests
   @Test
   public void shouldReturnToDoListWhenLoadToDos() {
