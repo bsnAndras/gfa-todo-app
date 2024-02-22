@@ -1,27 +1,31 @@
 import java.io.IOException;
 import java.nio.file.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ToDo {
+  public static final Path FILEPATH = Paths.get("src/todos.txt");
+  private static List<Task> toDoList;
+
   public static void main(String[] args) {
     /*
     Given the terminal opened in the project directory
     When the application is run without any arguments
     Then it should print the usage instructions
     */
-    if(args.length == 0){
+    if (args.length == 0) {
       printUsage();
       return;
     }
 
-    switch (args[0]){
+    switch (args[0]) {
       case "-l":
         //for listing out tasks from the todos.txt
         listTasks();
         break;
       case "-a":
         //not implemented yet
-        System.out.println("Function is not implemented yet");
+        //addTask(args);
         break;
       case "-r":
         //not implemented yet
@@ -37,7 +41,6 @@ public class ToDo {
         break;
     }
   }
-
 
 
   private static void printUsage() {
@@ -66,18 +69,30 @@ public class ToDo {
    * 3 - Do homework
    */
   private static void listTasks() {
-    List<String> toDoList;
-    try {
-      toDoList= Files.readAllLines(Paths.get("todos.txt"));
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
-    if(toDoList.isEmpty()){
+    toDoList = loadToDos();
+
+    if (toDoList.isEmpty()) {
       System.out.println("No todos for today! :)");
       return;
     }
     for (int i = 0; i < toDoList.size(); i++) {
-      System.out.printf("%d - %s\n",i+1,toDoList.get(i));
+      System.out.printf("%d - %s\n", i + 1, toDoList.get(i));
     }
+  }
+
+  private static List<Task> loadToDos() {
+    List<String> fileContent;
+    List<Task> toDoList = new ArrayList<>();
+    try {
+      fileContent = Files.readAllLines(ToDo.FILEPATH);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+
+    for (String line : fileContent) {
+        toDoList.add(new Task(line));
+    }
+
+    return toDoList;
   }
 }
