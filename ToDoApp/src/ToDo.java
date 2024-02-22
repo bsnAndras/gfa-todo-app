@@ -109,6 +109,15 @@ public class ToDo {
     }
     return fileContent;
   }
+  public static int writeFile(String newLine,Path filePath) {
+
+    try {
+      Files.writeString(filePath,newLine,StandardOpenOption.CREATE,StandardOpenOption.APPEND);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+    return 0;
+  }
 
   public static int addTask(Path filePath, String newTaskDescription) {
     Task newTask = new Task(newTaskDescription);
