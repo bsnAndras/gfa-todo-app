@@ -43,6 +43,13 @@ class ToDoTest {
     }
 
     Assertions.assertEquals(toDoList.toString(), ToDo.loadToDos(filePath).toString());
+  }
 
+  //addTask test
+  @Test
+  public void shouldAddTask() {
+    Path filePath = Paths.get("test.txt");
+    ToDo.addTask("Feed the monkey",filePath);
+    Assertions.assertEquals("Feed the monkey",ToDo.readFile(filePath).getLast());
   }
 }
