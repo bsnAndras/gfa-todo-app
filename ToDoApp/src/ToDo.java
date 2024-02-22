@@ -194,6 +194,14 @@ public class ToDo {
 
     if (toDoList.size() >= lineNr) {
       toDoList.remove(lineNr-1);
+      try {
+        Files.deleteIfExists(filePath);
+        for (Task line : toDoList) {
+            addTask(line.description,filePath);
+        }
+      } catch (IOException e) {
+        throw new RuntimeException(e);
+      }
     } else {
       System.err.println("index out of bound");
     }
