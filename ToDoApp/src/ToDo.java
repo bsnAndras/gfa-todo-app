@@ -29,12 +29,12 @@ public class ToDo {
         }
         break;
       case "-r":
-        //not implemented yet
-        System.out.println("Function is not implemented yet");
+        //for removing tasks
+        removeTask(FILEPATH,args[1]);
         break;
       case "-c":
-        //in progress
-        checkTask(FILEPATH,args[1]);
+        //for checking tasks
+        checkTask(FILEPATH, args[1]);
         break;
       default:
         System.err.println("Unsupported argument, try again!");
@@ -117,7 +117,7 @@ public class ToDo {
     try {
       fileContent = Files.readAllLines(filePath);
     } catch (IOException e) {
-      throw new RuntimeException("File not found",e);
+      throw new RuntimeException("File not found", e);
     }
     return fileContent;
   }
@@ -125,7 +125,8 @@ public class ToDo {
   public static int writeFile(String newLine, Path filePath) {
 
     try {
-      Files.writeString(filePath, "\n"+newLine, StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+      Files.writeString(filePath, "\n" + newLine, StandardOpenOption.CREATE,
+          StandardOpenOption.APPEND);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
@@ -156,6 +157,7 @@ public class ToDo {
     writeFile(newTaskDescription, filePath);
     return 0;
   }
+
   /**
    * <h1>Check task</h1>
    * <ul>
@@ -166,13 +168,34 @@ public class ToDo {
    *   <li>Then it should check the second task from the file</li>
    * </ul>
    */
-  public static void checkTask(Path filePath, String lineIndexStr){
+  public static void checkTask(Path filePath, String lineIndexStr) {
     int lineNr = Integer.parseInt(lineIndexStr);
     List<Task> toDoList = loadToDos(filePath);
     if (toDoList.size() >= lineNr) {
       System.out.println(toDoList.get(lineNr - 1));
     } else {
-      System.err.println("No task found at given line");
+      System.err.println("index out of bound");
+    }
+  }
+
+  /**
+   * <h1>Remove task</h1>
+   * <ul>
+   *  <li>Given the terminal opened in the project directory</li>
+   *  <li>And the file where you store your data exists</li>
+   *  <li>And the file has at least 2 tasks</li>
+   *  <li>When the application is ran with the -r 2 argument</li>
+   *  <li>Then it should remove the second task from the file</li>
+   * </ul>
+   */
+  public static void removeTask(Path filePath, String lineIndexStr) {
+    int lineNr = Integer.parseInt(lineIndexStr);
+    List<Task> toDoList = loadToDos(filePath);
+
+    if (toDoList.size() >= lineNr) {
+      toDoList.remove(lineNr-1);
+    } else {
+      System.err.println("index out of bound");
     }
   }
 }
