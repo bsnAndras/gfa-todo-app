@@ -3,6 +3,7 @@
 *.bak
 *.tmp
 logs
+*.txt
 
 ### Mac OS
 .DS_Store
