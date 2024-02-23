@@ -30,7 +30,7 @@ public class ToDo {
         break;
       case "-r":
         //for removing tasks
-        removeTask(FILEPATH,args[1]);
+        removeTask(FILEPATH, args[1]);
         break;
       case "-c":
         //for checking tasks
@@ -125,7 +125,7 @@ public class ToDo {
   public static int writeFile(String newLine, Path filePath) {
 
     try {
-      Files.writeString(filePath, "\n" + newLine, StandardOpenOption.CREATE,
+      Files.writeString(filePath, newLine + "\n", StandardOpenOption.CREATE,
           StandardOpenOption.APPEND);
     } catch (IOException e) {
       throw new RuntimeException(e);
@@ -153,8 +153,8 @@ public class ToDo {
     if (Files.exists(filePath)) {
       toDoList = loadToDos(filePath);
     }
-    toDoList.add(newTask);
     writeFile(newTaskDescription, filePath);
+    toDoList.add(newTask);
     return 0;
   }
 
@@ -193,11 +193,11 @@ public class ToDo {
     List<Task> toDoList = loadToDos(filePath);
 
     if (toDoList.size() >= lineNr) {
-      toDoList.remove(lineNr-1);
+      toDoList.remove(lineNr - 1);
       try {
         Files.deleteIfExists(filePath);
         for (Task line : toDoList) {
-            addTask(line.description,filePath);
+          addTask(line.description, filePath);
         }
       } catch (IOException e) {
         throw new RuntimeException(e);
