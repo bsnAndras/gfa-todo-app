@@ -36,4 +36,7 @@ public class Task {
     }
     return task;
   }
+  public void toggle(){
+    isDone=!isDone;
+  }
 }
