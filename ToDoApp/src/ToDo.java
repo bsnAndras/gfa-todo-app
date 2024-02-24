@@ -14,32 +14,33 @@ public class ToDo {
       printUsage();
       return;
     }
-
-    switch (args[0]) {
-      case "-l":
-        //for listing out tasks from the todos.txt
-        listTasks(FILEPATH);
-        break;
-      case "-a":
-        //for adding tasks
-        if (args.length >= 2) {
-          addTask(args[1], FILEPATH);
-        } else {
-          System.err.println("Unable to add: no task provided");
-        }
-        break;
-      case "-r":
-        //for removing tasks
-        removeTask(FILEPATH, args[1]);
-        break;
-      case "-c":
-        //for checking tasks
-        checkTask(FILEPATH, args[1]);
-        break;
-      default:
-        System.err.println("Unsupported argument, try again!");
-        printUsage();
-        break;
+    if (args.length == 2) {
+      switch (args[0]) {
+        case "-l":
+          //for listing out tasks from the todos.txt
+          listTasks(FILEPATH);
+          break;
+        case "-a":
+          //for adding tasks
+          if (args.length >= 2) {
+            addTask(args[1], FILEPATH);
+          } else {
+            System.err.println("Unable to add: no task provided");
+          }
+          break;
+        case "-r":
+          //for removing tasks
+          removeTask(FILEPATH, args[1]);
+          break;
+        case "-c":
+          //for checking tasks
+          checkTask(FILEPATH, args[1]);
+          break;
+        default:
+          System.err.println("Unsupported argument, try again!");
+          printUsage();
+          break;
+      }
     }
   }
 
