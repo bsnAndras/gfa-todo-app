@@ -14,18 +14,19 @@ public class ToDo {
       printUsage();
       return;
     }
+    loadToDos(FILEPATH);
     switch (args[0]) {
-      case "-l" -> listTasks(FILEPATH); //for listing out tasks from the todos.txt
+      case "-l" -> listTasks(); //for listing out tasks
       case "-a" -> {
         //for adding tasks
         if (args.length >= 2) {
-          addTask(args[1], FILEPATH);
+          addTask(args[1]);
         } else {
           System.err.println("Unable to add: no task provided");
         }
       }
-      case "-r" -> removeTask(FILEPATH, args[1]); //for removing tasks
-      case "-c" -> checkTask(FILEPATH, args[1]); //for checking tasks
+      case "-r" -> removeTask(args[1]); //for removing tasks
+      case "-c" -> checkTask(args[1]); //for checking tasks
       default -> {
         System.err.println("Unsupported argument, try again!");
         printUsage();
@@ -78,8 +79,7 @@ public class ToDo {
    * - <b>When</b> the application is ran with `-l` argument
    * - <b>Then</b> it should show a message like this: `No todos for today! :)`
    */
-  private static void listTasks(Path filePath) {
-    toDoList = loadToDos(filePath);
+  private static void listTasks() {
 
     if (toDoList.isEmpty()) {
       System.out.println("No todos for today! :)");
@@ -112,16 +112,16 @@ public class ToDo {
     return fileContent;
   }
 
-  public static int writeFile(String newLine, Path filePath) {
-
-    try {
-      Files.writeString(filePath, newLine + "\n", StandardOpenOption.CREATE,
-          StandardOpenOption.APPEND);
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
-    return 0;
-  }
+//  public static int saveFile(List<Task> toDoList, Path filePath) {
+//
+//    try {
+//      Files.writeString(filePath, newLine + "\n", StandardOpenOption.CREATE,
+//          StandardOpenOption.APPEND);
+//    } catch (IOException e) {
+//      throw new RuntimeException(e);
+//    }
+//    return 0;
+//  }
 
   /**
    * <h1>Add new task</h1>
@@ -138,14 +138,9 @@ public class ToDo {
    *    <li><em>`Unable to add: no task provided`</em></li>
    *  </ul>
    */
-  public static int addTask(String newTaskDescription, Path filePath) {
+  public static void addTask(String newTaskDescription) {
     Task newTask = new Task(newTaskDescription);
-    if (Files.exists(filePath)) {
-      toDoList = loadToDos(filePath);
-    }
-    writeFile(newTaskDescription, filePath);
     toDoList.add(newTask);
-    return 0;
   }
 
   /**
@@ -158,9 +153,8 @@ public class ToDo {
    *   <li>Then it should check the second task from the file</li>
    * </ul>
    */
-  public static void checkTask(Path filePath, String lineIndexStr) {
+  public static void checkTask(String lineIndexStr) {
     int lineNr = Integer.parseInt(lineIndexStr);
-    List<Task> toDoList = loadToDos(filePath);
     if (toDoList.size() >= lineNr) {
       System.out.println(toDoList.get(lineNr - 1));
     } else {
@@ -178,20 +172,11 @@ public class ToDo {
    *  <li>Then it should remove the second task from the file</li>
    * </ul>
    */
-  public static void removeTask(Path filePath, String lineIndexStr) {
+  public static void removeTask(String lineIndexStr) {
     int lineNr = Integer.parseInt(lineIndexStr);
-    List<Task> toDoList = loadToDos(filePath);
 
     if (toDoList.size() >= lineNr) {
       toDoList.remove(lineNr - 1);
-      try {
-        Files.deleteIfExists(filePath);
-        for (Task line : toDoList) {
-          addTask(line.description, filePath);
-        }
-      } catch (IOException e) {
-        throw new RuntimeException(e);
-      }
     } else {
       System.err.println("index out of bound");
     }

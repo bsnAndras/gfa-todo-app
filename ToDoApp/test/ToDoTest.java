@@ -48,12 +48,6 @@ class ToDoTest {
     Assertions.assertDoesNotThrow(() -> ToDo.readFile(TESTFILE_PATH));
   }
 
-  //writeFile test
-  @Test
-  public void shouldWriteWithoutError() {
-    Assertions.assertDoesNotThrow(() -> ToDo.writeFile("test", TESTFILE_PATH));
-  }
-
   //List Tasks Tests
   @Test
   public void shouldReturnToDoListWhenLoadToDos() {
@@ -67,12 +61,5 @@ class ToDoTest {
     }
 
     Assertions.assertEquals(toDoList.toString(), ToDo.loadToDos(TESTFILE_PATH).toString());
-  }
-
-  //addTask test
-  @Test
-  public void shouldAddTask() {
-    ToDo.addTask("Feed the monkey", TESTFILE_PATH);
-    Assertions.assertEquals("Feed the monkey", ToDo.readFile(TESTFILE_PATH).getLast());
   }
 }
