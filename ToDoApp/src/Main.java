@@ -33,7 +33,7 @@ public class Main {
         printUsage();
       }
     }
-    //save(toDoList,FILEPATH);
+//    save(toDoList,FILEPATH);
   }
 
   /**
@@ -58,7 +58,6 @@ public class Main {
 
   public static List<Task> load(Path filePath) {
     List<String> fileContent;
-    List<Task> toDoList = new ArrayList<>();
     fileContent = readFile(filePath);
 
     for (String line : fileContent) {
@@ -81,7 +80,7 @@ public class Main {
 //  public static int save(List<Task> toDoList, Path filePath) {
 //
 //    try {
-//      Files.writeString(filePath, newLine + "\n", StandardOpenOption.CREATE,
+//      Files.writeString(filePath, ,StandardOpenOption.CREATE,
 //          StandardOpenOption.APPEND);
 //    } catch (IOException e) {
 //      throw new RuntimeException(e);
