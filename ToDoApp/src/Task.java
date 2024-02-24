@@ -1,28 +1,39 @@
 public class Task {
   //[state] <description>
-  String description;
-  State state;
-
-  enum State {
-    TODO(' '),IN_PROGRESS('.'),DONE('X'),WONT_DO('-');
-    private final char state;
-
-    State(char state) {
-      this.state = state;
-    }
-
-    public char getChar(){
-      return state;
-    }
-  }
+  final String description;
+  private boolean isDone;
 
   public Task(String description) {
     this.description = description;
-    state = State.TODO;
+    isDone = false;
   }
 
-  @Override
-  public String toString() {
+  public String getDescription() {
     return description;
+  }
+
+  public boolean getIsDone() {
+    return isDone;
+  }
+
+  public String serializeTask() {
+    return String.format("[%c] %s",
+        isDone ? 'X' : ' ',
+        getDescription());
+  }
+
+  public static Task getTaskFromDeSerialization(String text) {
+    String description;
+    boolean isDone;
+
+    description = text.substring(4);
+
+    Task task = new Task(description);
+    if (text.charAt(1) == 'X') {
+      task.isDone = true;
+    } else {
+      task.isDone = false;
+    }
+    return task;
   }
 }
