@@ -11,7 +11,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class ToDoTest {
+class MainTest {
   List<Task> toDoList;
   static Path TESTFILE_PATH;
   @BeforeAll
@@ -45,7 +45,7 @@ class ToDoTest {
   //readFile test
   @Test
   public void shouldReadWithoutError() {
-    Assertions.assertDoesNotThrow(() -> ToDo.readFile(TESTFILE_PATH));
+    Assertions.assertDoesNotThrow(() -> Main.readFile(TESTFILE_PATH));
   }
 
   //List Tasks Tests
@@ -54,12 +54,12 @@ class ToDoTest {
     List<String> fileContent;
     toDoList = new ArrayList<>();
 
-    fileContent = ToDo.readFile(TESTFILE_PATH);
+    fileContent = Main.readFile(TESTFILE_PATH);
 
     for (String line : fileContent) {
       toDoList.add(new Task(line));
     }
 
-    Assertions.assertEquals(toDoList.toString(), ToDo.loadToDos(TESTFILE_PATH).toString());
+    Assertions.assertEquals(toDoList.toString(), Main.load(TESTFILE_PATH).toString());
   }
 }

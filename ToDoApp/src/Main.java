@@ -3,7 +3,7 @@ import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ToDo {
+public class Main {
   public static final Path FILEPATH = Paths.get(
       "C:\\Users\\F. András\\Documents\\Prog\\Workspace\\bsnAndras-todo-app\\ToDoApp\\src\\todos.txt");
   public static List<Task> toDoList = new ArrayList<>();
@@ -14,7 +14,7 @@ public class ToDo {
       printUsage();
       return;
     }
-    loadToDos(FILEPATH);
+    load(FILEPATH);
     switch (args[0]) {
       case "-l" -> listTasks(); //for listing out tasks
       case "-a" -> {
@@ -32,6 +32,7 @@ public class ToDo {
         printUsage();
       }
     }
+    save(toDoList,FILEPATH);
   }
 
   /**
@@ -90,7 +91,7 @@ public class ToDo {
     }
   }
 
-  public static List<Task> loadToDos(Path filePath) {
+  public static List<Task> load(Path filePath) {
     List<String> fileContent;
     List<Task> toDoList = new ArrayList<>();
     fileContent = readFile(filePath);
@@ -112,16 +113,16 @@ public class ToDo {
     return fileContent;
   }
 
-//  public static int saveFile(List<Task> toDoList, Path filePath) {
-//
-//    try {
-//      Files.writeString(filePath, newLine + "\n", StandardOpenOption.CREATE,
-//          StandardOpenOption.APPEND);
-//    } catch (IOException e) {
-//      throw new RuntimeException(e);
-//    }
-//    return 0;
-//  }
+  public static int save(List<Task> toDoList, Path filePath) {
+
+    try {
+      Files.writeString(filePath, newLine + "\n", StandardOpenOption.CREATE,
+          StandardOpenOption.APPEND);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+    return 0;
+  }
 
   /**
    * <h1>Add new task</h1>
