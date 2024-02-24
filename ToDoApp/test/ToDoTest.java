@@ -4,11 +4,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,13 +16,13 @@ class ToDoTest {
   List<Task> toDoList;
   String[] args;
   static Path TESTFILE_PATH;
-
   @BeforeEach
   public void setTodo() {
     todo = new ToDo();
     toDoList = new ArrayList<>();
     TESTFILE_PATH = Paths.get(
-        "C:\\Users\\F. András\\Documents\\Prog\\Workspace\\bsnAndras-todo-app\\ToDoApp\\test\\test.txt");
+        "C:\\Users\\F. András\\Documents\\Prog\\Workspace\\" +
+            "bsnAndras-todo-app\\ToDoApp\\test\\test.txt");
     try {
       Files.writeString(TESTFILE_PATH, "test1 \ntest2 \ntest3", StandardOpenOption.CREATE,StandardOpenOption.APPEND);
     } catch (IOException e) {
