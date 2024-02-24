@@ -12,9 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class ToDoTest {
-  ToDo todo;
   List<Task> toDoList;
-  String[] args;
   static Path TESTFILE_PATH;
   @BeforeAll
   public static void setFile(){
@@ -32,7 +30,6 @@ class ToDoTest {
   }
   @BeforeEach
   public void setTodo() {
-    todo = new ToDo();
     toDoList = new ArrayList<>();
   }
 
