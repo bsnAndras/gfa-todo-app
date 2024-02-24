@@ -22,12 +22,10 @@ class ToDoTest {
         "C:\\Users\\F. András\\Documents\\Prog\\Workspace\\" +
             "bsnAndras-todo-app\\ToDoApp\\test\\test.txt");
     try {
+      Files.deleteIfExists(TESTFILE_PATH);
       Files.writeString(TESTFILE_PATH,
-          "test1 \n" +
-          "test2 \n" +
-          "test3 \n" +
-          "--------------------\n",
-          StandardOpenOption.CREATE,StandardOpenOption.APPEND);
+          "Testing file for To Do Application:\n" +
+              "------------------------------------\n",StandardOpenOption.CREATE);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
@@ -41,7 +39,7 @@ class ToDoTest {
   @AfterEach
   public void testEnd(){
     try {
-      Files.writeString(TESTFILE_PATH, "\n----------End of Test-----------\n", StandardOpenOption.APPEND);
+      Files.writeString(TESTFILE_PATH, "----------End of Test-----------\n", StandardOpenOption.APPEND);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
@@ -56,7 +54,7 @@ class ToDoTest {
   //writeFile test
   @Test
   public void shouldWriteWithoutError() {
-    Assertions.assertDoesNotThrow(() -> ToDo.writeFile("\ntest", TESTFILE_PATH));
+    Assertions.assertDoesNotThrow(() -> ToDo.writeFile("test", TESTFILE_PATH));
   }
 
   //List Tasks Tests
@@ -84,7 +82,6 @@ class ToDoTest {
   //checkTask test
   @Test
   void shouldCheckTask() {
-    shouldReadWithoutError();
     ToDo.checkTask(TESTFILE_PATH, "2");
   }
 }
