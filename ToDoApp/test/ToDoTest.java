@@ -16,18 +16,26 @@ class ToDoTest {
   List<Task> toDoList;
   String[] args;
   static Path TESTFILE_PATH;
-  @BeforeEach
-  public void setTodo() {
-    todo = new ToDo();
-    toDoList = new ArrayList<>();
+  @BeforeAll
+  public static void setFile(){
     TESTFILE_PATH = Paths.get(
         "C:\\Users\\F. András\\Documents\\Prog\\Workspace\\" +
             "bsnAndras-todo-app\\ToDoApp\\test\\test.txt");
     try {
-      Files.writeString(TESTFILE_PATH, "test1 \ntest2 \ntest3", StandardOpenOption.CREATE,StandardOpenOption.APPEND);
+      Files.writeString(TESTFILE_PATH,
+          "test1 \n" +
+          "test2 \n" +
+          "test3 \n" +
+          "--------------------\n",
+          StandardOpenOption.CREATE,StandardOpenOption.APPEND);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
+  }
+  @BeforeEach
+  public void setTodo() {
+    todo = new ToDo();
+    toDoList = new ArrayList<>();
   }
 
   @AfterEach
