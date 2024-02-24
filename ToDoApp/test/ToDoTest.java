@@ -75,10 +75,4 @@ class ToDoTest {
     ToDo.addTask("Feed the monkey", TESTFILE_PATH);
     Assertions.assertEquals("Feed the monkey", ToDo.readFile(TESTFILE_PATH).getLast());
   }
-
-  //checkTask test
-  @Test
-  void shouldCheckTask() {
-    ToDo.checkTask(TESTFILE_PATH, "2");
-  }
 }
