@@ -14,26 +14,30 @@ public class Main {
       printUsage();
       return;
     }
-    toDoList=load(FILEPATH);
-    ToDoHandler toDoHandler = new ToDoHandler(toDoList);
-    switch (args[0]) {
-      case "-l" -> toDoHandler.listTasks(); //for listing out tasks
-      case "-a" -> {
-        //for adding tasks
-        if (args.length >= 2) {
-          toDoHandler.addTask(args[1]);
-        } else {
-          System.err.println("Unable to add: no task provided");
+    try {
+      toDoList = load(FILEPATH);
+      ToDoHandler toDoHandler = new ToDoHandler(toDoList);
+      switch (args[0]) {
+        case "-l" -> toDoHandler.listTasks(); //for listing out tasks
+        case "-a" -> {
+          //for adding tasks
+          if (args.length >= 2) {
+            toDoHandler.addTask(args[1]);
+          } else {
+            System.err.println("Unable to add: no task provided");
+          }
+        }
+        case "-r" -> toDoHandler.removeTask(args[1]); //for removing tasks
+        case "-c" -> toDoHandler.checkTask(args[1]); //for checking tasks
+        default -> {
+          System.err.println("Unsupported argument, try again!");
+          printUsage();
         }
       }
-      case "-r" -> toDoHandler.removeTask(args[1]); //for removing tasks
-      case "-c" -> toDoHandler.checkTask(args[1]); //for checking tasks
-      default -> {
-        System.err.println("Unsupported argument, try again!");
-        printUsage();
-      }
+      save(toDoList, FILEPATH);
+    } catch (IOException e) {
+      throw new RuntimeException("File not found", e);
     }
-//    save(toDoList,FILEPATH);
   }
 
   /**
@@ -56,35 +60,28 @@ public class Main {
   }
 
 
-  public static List<Task> load(Path filePath) {
+  public static List<Task> load(Path filePath) throws IOException {
     List<String> fileContent;
     fileContent = readFile(filePath);
 
     for (String line : fileContent) {
-      toDoList.add(new Task(line));
+      toDoList.add(Task.getTaskFromDeSerialization(line));
     }
 
     return toDoList;
   }
 
-  public static List<String> readFile(Path filePath) {
+  public static List<String> readFile(Path filePath) throws IOException {
     List<String> fileContent;
-    try {
-      fileContent = Files.readAllLines(filePath);
-    } catch (IOException e) {
-      throw new RuntimeException("File not found", e);
-    }
+    fileContent = Files.readAllLines(filePath);
     return fileContent;
   }
 
-//  public static int save(List<Task> toDoList, Path filePath) {
-//
-//    try {
-//      Files.writeString(filePath, ,StandardOpenOption.CREATE,
-//          StandardOpenOption.APPEND);
-//    } catch (IOException e) {
-//      throw new RuntimeException(e);
-//    }
-//    return 0;
-//  }
+  public static void save(List<Task> toDoList, Path filePath) throws IOException {
+    StringBuilder fileContent = new StringBuilder();
+    for (Task task : toDoList) {
+      fileContent.append(task.serializeTask()).append(System.lineSeparator());
+    }
+    Files.writeString(filePath, fileContent, StandardOpenOption.TRUNCATE_EXISTING);
+  }
 }
