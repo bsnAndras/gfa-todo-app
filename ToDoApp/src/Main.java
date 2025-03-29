@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
-  public static final Path FILEPATH = Paths.get(
-      "C:\\Users\\F. András\\Documents\\Prog\\Workspace\\bsnAndras-todo-app\\ToDoApp\\src\\todos.txt");
+  public static final Path FILEPATH = Path.of(
+      "todos.txt");
   public static List<Task> toDoList = new ArrayList<>();
 
   public static void main(String[] args) {
